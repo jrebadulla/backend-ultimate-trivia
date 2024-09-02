@@ -12,6 +12,6 @@ class Login extends Model
     protected $primaryKey = 'user_id';
     public $incrementing = true;
     protected $keyType = 'int';
-    protected $fillable = ['firstName', 'lastName', 'address', 'email', 'password'];
+    protected $fillable = ['firstName', 'lastName', 'address', 'email', 'password', 'username'];
     public $timestamps = true;
 }

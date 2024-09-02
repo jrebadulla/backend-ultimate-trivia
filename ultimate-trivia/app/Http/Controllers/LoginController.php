@@ -15,16 +15,18 @@ class LoginController extends Controller
         $request->validate([
             'firstname' => 'required|string',
             'lastname' => 'required|string',
-            'address' => 'required|string',
+            'level_id' => 'required|integer|in:1,2,3,4',
             'email' => 'required|string',
             'password' => 'required|string',
+            'username' => 'required|string',
         ]);
 
         $user = new Login();
         $user->firstname = $request->input('firstname');
         $user->lastname = $request->input('lastname');
-        $user->address = $request->input('address');
+        $user->level_id = $request->input('level_id');
         $user->email = $request->input('email');
+        $user->username = $request->input('username');
         $user->password = Hash::make($request->input('password'));
 
         $user->save();
@@ -42,21 +44,21 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string',
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             return response()->json([
                 'message' => 'Login successful',
                 'user' => $user,
-                'user_id' => $user->user_id,
             ]);
         } else {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
     }
+    
 }
