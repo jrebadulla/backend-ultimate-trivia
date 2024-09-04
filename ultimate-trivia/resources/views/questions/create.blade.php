@@ -7,7 +7,7 @@
 
 <body>
     <h1>Create Question</h1>
-    <form action="{{ route('questions.store') }}" method="POST">
+    <form action="{{ route('questions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="game_id">Game ID:</label>
         <input type="text" id="game_id" name="game_id" required>
@@ -33,6 +33,18 @@
 
         <label for="option_d">Option D:</label>
         <input type="text" id="option_d" name="option_d">
+
+        <label for="image1">Image 1:</label>
+        <input type="file" id="image1" name="image1">
+
+        <label for="image2">Image 2:</label>
+        <input type="file" id="image2" name="image2">
+
+        <label for="image3">Image 3:</label>
+        <input type="file" id="image3" name="image3">
+
+        <label for="image4">Image 4:</label>
+        <input type="file" id="image4" name="image4">
 
         <button type="submit">Save Question</button>
     </form>
