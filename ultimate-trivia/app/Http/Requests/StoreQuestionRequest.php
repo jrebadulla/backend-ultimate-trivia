@@ -32,6 +32,10 @@ class StoreQuestionRequest extends FormRequest
             'option_b' => 'nullable|string|max:255',
             'option_c' => 'required|string|max:255',
             'option_d' => 'required|string|max:255',
+            'image1' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image2' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image3' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image4' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
     }
 }
