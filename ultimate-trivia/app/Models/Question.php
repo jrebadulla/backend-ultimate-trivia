@@ -24,8 +24,14 @@ class Question extends Model
         'option_b',
         'option_c',
         'option_d',
+        'image1',
+        'image2',
+        'image3',
+        'image4',
 
     ];
+
+
 
     public function level()
     {
