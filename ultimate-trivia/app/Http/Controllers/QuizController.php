@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Storage;
 
 class QuizController extends Controller
 {
@@ -18,6 +19,14 @@ class QuizController extends Controller
         $gameId = $request->input('game_id');
 
         $questions = Question::where('game_id', $gameId)->with('answers')->get();
+
+        $questions->transform(function ($question) {
+            $question->image1 = Storage::url($question->image1);
+            $question->image2 = Storage::url($question->image2);
+            $question->image3 = Storage::url($question->image3);
+            $question->image4 = Storage::url($question->image4);
+            return $question;
+        });
 
         return response()->json($questions);
     }
