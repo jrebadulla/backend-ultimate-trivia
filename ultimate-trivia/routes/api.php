@@ -21,3 +21,12 @@ Route::post('/store', [QuestionController::class,'store']);
 
 Route::get('/quiz-questions', [QuizController::class, 'getQuizQuestions']);
 Route::post('/{gameId}/add-question', [QuizController::class, 'addQuestionToGame']);
+
+Route::get('user-progress', [UserGameProgressController::class, 'getProgress']);
+
+Route::get('updateScore', [UserGameProgressController::class, 'updateScore']);
+Route::post('saveUserScore', [UserGameProgressController::class, 'saveUserScore']);
+Route::get('users-score', [UserGameProgressController::class, 'getUserProgress']);
+
+
+

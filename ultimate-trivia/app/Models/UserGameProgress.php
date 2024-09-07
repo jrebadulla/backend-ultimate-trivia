@@ -13,24 +13,22 @@ class UserGameProgress extends Model
 
     protected $primaryKey = 'user_game_progress_id';
 
+    public $incrementing = false;
     protected $fillable = [
         'user_id',
         'game_id',
         'level',
         'high_score',
         'last_played',
+        'score'
     ];
-
-    public $incrementing = false;
-
-    protected $keyType = 'string';
 
     public function user()
     {
-        return $this->belongsTo(Users::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function games()
+    public function game()
     {
         return $this->belongsTo(Game::class, 'game_id');
     }
