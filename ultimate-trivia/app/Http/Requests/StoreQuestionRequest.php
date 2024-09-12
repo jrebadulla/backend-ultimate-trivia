@@ -30,12 +30,12 @@ class StoreQuestionRequest extends FormRequest
             'correct_answer' => 'required|string|max:255',
             'option_a' => 'nullable|string|max:255',
             'option_b' => 'nullable|string|max:255',
-            'option_c' => 'required|string|max:255',
-            'option_d' => 'required|string|max:255',
+            'option_c' => 'nullable|string|max:255',
+            'option_d' => 'nullable|string|max:255',
             'image1' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'image2' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'image3' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'image4' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image3' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image4' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ];
     }
 }

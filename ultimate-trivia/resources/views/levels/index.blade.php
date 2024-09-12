@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Levels List</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Levels List</h1>
-    <a href="{{ route('levels.create') }}">Add New Level</a>
-    <table>
+
+    <a href="{{ route('levels.create') }}" class="btn btn-primary mb-3">Add New Level</a>
+
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Level Name</th>
@@ -20,5 +19,4 @@
             @endforeach
         </tbody>
     </table>
-</body>
-</html>
+@endsection

@@ -1,54 +1,73 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.app')
 
-<head>
-    <title>Create Question</title>
-</head>
-
-<body>
+@section('content')
     <h1>Create Question</h1>
     <form action="{{ route('questions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <label for="game_id">Game ID:</label>
-        <input type="text" id="game_id" name="game_id" required>
+        
+        <div class="form-group">
+            <label for="game_id">Game ID</label>
+            <input type="text" id="game_id" name="game_id" class="form-control" required>
+        </div>
 
-        <label for="level_id">Level ID:</label>
-        <input type="text" id="level_id" name="level_id">
+        <div class="form-group">
+            <label for="level_id">Level ID</label>
+            <input type="text" id="level_id" name="level_id" class="form-control">
+        </div>
 
-        <label for="question_text">Question Text:</label>
-        <textarea id="question_text" name="question_text" required></textarea>
+        <div class="form-group">
+            <label for="question_text">Question Text</label>
+            <textarea id="question_text" name="question_text" class="form-control" required></textarea>
+        </div>
 
-        <label for="correct_answer">Correct Answer:</label>
-        <input type="text" id="correct_answer" name="correct_answer" required>
+        <div class="form-group">
+            <label for="correct_answer">Correct Answer</label>
+            <input type="text" id="correct_answer" name="correct_answer" class="form-control" required>
+        </div>
 
-        <label>For Multiple Choice</label>
-        <label for="option_a">Option A:</label>
-        <input type="text" id="option_a" name="option_a">
+        <div class="form-group">
+            <label>For Multiple Choice</label>
+            <label for="option_a">Option A</label>
+            <input type="text" id="option_a" name="option_a" class="form-control">
+        </div>
 
-        <label for="option_b">Option B:</label>
-        <input type="text" id="option_b" name="option_b">
+        <div class="form-group">
+            <label for="option_b">Option B</label>
+            <input type="text" id="option_b" name="option_b" class="form-control">
+        </div>
 
-        <label for="option_c">Option C:</label>
-        <input type="text" id="option_c" name="option_c">
+        <div class="form-group">
+            <label for="option_c">Option C</label>
+            <input type="text" id="option_c" name="option_c" class="form-control">
+        </div>
 
-        <label for="option_d">Option D:</label>
-        <input type="text" id="option_d" name="option_d">
+        <div class="form-group">
+            <label for="option_d">Option D</label>
+            <input type="text" id="option_d" name="option_d" class="form-control">
+        </div>
 
-        <label for="image1">Image 1:</label>
-        <input type="file" id="image1" name="image1">
+        <div class="form-group">
+            <label for="image1">Image 1</label>
+            <input type="file" id="image1" name="image1" class="form-control-file">
+        </div>
 
-        <label for="image2">Image 2:</label>
-        <input type="file" id="image2" name="image2">
+        <div class="form-group">
+            <label for="image2">Image 2</label>
+            <input type="file" id="image2" name="image2" class="form-control-file">
+        </div>
 
-        <label for="image3">Image 3:</label>
-        <input type="file" id="image3" name="image3">
+        <div class="form-group">
+            <label for="image3">Image 3</label>
+            <input type="file" id="image3" name="image3" class="form-control-file">
+        </div>
 
-        <label for="image4">Image 4:</label>
-        <input type="file" id="image4" name="image4">
+        <div class="form-group">
+            <label for="image4">Image 4</label>
+            <input type="file" id="image4" name="image4" class="form-control-file">
+        </div>
 
-        <button type="submit">Save Question</button>
+        <button type="submit" class="btn btn-primary">Save Question</button>
     </form>
-    <a href="{{ route('questions.index') }}">Back to List</a>
-</body>
 
-</html>
+    <a href="{{ route('questions.index') }}" class="btn btn-secondary">Back to List</a>
+@endsection

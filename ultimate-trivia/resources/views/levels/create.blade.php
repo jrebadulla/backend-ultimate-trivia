@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Level</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>Create Level</h1>
     <form action="{{ route('levels.store') }}" method="POST">
         @csrf
-        <label for="level_name">Level Name:</label>
-        <input type="text" id="level_name" name="level_name" required>
-        <button type="submit">Save Level</button>
+        <div class="form-group">
+            <label for="level_name">Level Name:</label>
+            <input type="text" id="level_name" name="level_name" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Level</button>
     </form>
-</body>
-</html>
+@endsection
