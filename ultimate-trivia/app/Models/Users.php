@@ -13,6 +13,6 @@ class Users extends Model
     protected $primaryKey = 'user_id';
     public $incrementing = true;
     protected $keyType = 'int';
-    protected $fillable = ['firstName', 'lastName', 'address', 'email', 'password', 'username'];
+    protected $fillable = ['firstName', 'lastName', 'address', 'email', 'password', 'username','profile_picture'];
     public $timestamps = true;
 }

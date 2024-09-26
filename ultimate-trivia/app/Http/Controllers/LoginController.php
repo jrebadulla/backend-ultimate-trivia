@@ -19,6 +19,7 @@ class LoginController extends Controller
             'email' => 'required|string',
             'password' => 'required|string',
             'username' => 'required|string',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = new Login();
@@ -28,6 +29,13 @@ class LoginController extends Controller
         $user->email = $request->input('email');
         $user->username = $request->input('username');
         $user->password = Hash::make($request->input('password'));
+
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/profile_pictures'), $filename);
+            $user->profile_picture = 'uploads/profile_pictures/' . $filename; // Save path in DB
+        }
 
         $user->save();
 
