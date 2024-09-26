@@ -11,16 +11,17 @@ class Game extends Model
 
     protected $table = 'games';
 
-    protected $primaryKey = 'game_id';
+    protected $primaryKey = 'game_id'; 
+
     protected $fillable = [
         'game_name',
         'description',
         'level_required',
     ];
 
-    public $incrementing = false;
+    public $incrementing = true; 
 
-    protected $keyType = 'string';
+    protected $keyType = 'int'; 
 
     public $timestamps = false;
 
@@ -29,4 +30,3 @@ class Game extends Model
         return $this->belongsTo(Question::class, 'game_id', 'game_id');
     }
 }
-

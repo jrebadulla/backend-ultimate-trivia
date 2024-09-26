@@ -65,4 +65,10 @@ class GameController extends Controller
 
         return redirect()->route('games.index')->with('success', 'Game deleted successfully!');
     }
+
+    public function apiGames()
+    {
+        $games = Game::select('game_id', 'game_name')->get(); 
+        return response()->json($games, 200); 
+    }
 }

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Playtimes;
 use App\Models\UserGameProgress;
 use Illuminate\Support\Facades\DB;
 use App\Models\Users;
-
-;
 
 use Illuminate\Http\Request;
 
@@ -20,33 +19,66 @@ class UserGameProgressController extends Controller
             'game_id' => 'required|integer',
             'score' => 'required|integer',
             'level' => 'required|integer',
+            'playtime' => 'required|integer',
+            'day' => 'required|date_format:Y-m-d',
         ]);
 
-        $userGameProgress = UserGameProgress::where([
-            'user_id' => $validatedData['user_id'],
-            'game_id' => $validatedData['game_id']
-        ])->first();
+        DB::beginTransaction();  
 
-        if ($userGameProgress) {
-            $userGameProgress->high_score = max($userGameProgress->high_score, $validatedData['score']);
-            $userGameProgress->last_played = now();
-            $userGameProgress->score = $validatedData['score'];
-            $userGameProgress->save();
-        } else {
-            $userGameProgress = UserGameProgress::create([
+        try {
+        
+            $playtime = Playtimes::create([
                 'user_id' => $validatedData['user_id'],
                 'game_id' => $validatedData['game_id'],
-                'high_score' => $validatedData['score'],
-                'last_played' => now(),
                 'score' => $validatedData['score'],
-                'level' => $validatedData['level']
+                'level' => $validatedData['level'],
+                'playtime' => $validatedData['playtime'],
+                'day' => $validatedData['day'],
             ]);
-        }
 
-        return response()->json([
-            'message' => 'Score saved successfully',
-            'user_game_progress' => $userGameProgress
-        ]);
+      
+            $userGameProgress = UserGameProgress::where([
+                'user_id' => $validatedData['user_id'],
+                'game_id' => $validatedData['game_id']
+            ])->first();
+
+            if ($userGameProgress) {
+       
+                $userGameProgress->high_score = max($userGameProgress->high_score, $validatedData['score']);
+                $userGameProgress->last_played = now();
+                $userGameProgress->score = $validatedData['score'];
+                $userGameProgress->level = $validatedData['level'];  
+                $userGameProgress->save();
+            } else {
+          
+                $userGameProgress = UserGameProgress::create([
+                    'user_id' => $validatedData['user_id'],
+                    'game_id' => $validatedData['game_id'],
+                    'high_score' => $validatedData['score'],
+                    'last_played' => now(),
+                    'score' => $validatedData['score'],
+                    'level' => $validatedData['level']
+                ]);
+            }
+
+            DB::commit();  
+
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'User score saved successfully',
+                'playtime' => $playtime,
+                'userGameProgress' => $userGameProgress
+            ], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();  
+
+            return response()->json([
+                'error' => 'An error occurred while saving user score',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
     public function getUserProgress(Request $request)
     {
@@ -56,13 +88,10 @@ class UserGameProgressController extends Controller
             return response()->json(['error' => 'User ID is required'], 400);
         }
 
-        // Fetch all scores for the user
         $userScores = UserGameProgress::where('user_id', $userId)->get();
 
-        // Calculate total score
         $totalScore = $userScores->sum('high_score');
 
-        // Calculate maximum possible score
         $maxPossibleScore = $this->getMaxPossibleScore();
 
         return response()->json([
@@ -74,14 +103,36 @@ class UserGameProgressController extends Controller
 
     private function getMaxPossibleScore()
     {
-        // Fetch the number of questions for each game
         $games = Game::all();
         $totalQuestions = $games->sum(function ($game) {
-            return $game->questions()->count(); // Ensure you have a relationship to fetch the questions
+            return $game->questions()->count();
         });
 
-        // Assuming each question is worth the same amount of points, e.g., 10 points
-        $pointsPerQuestion = 10;
+
+        $pointsPerQuestion = 5;
         return $totalQuestions * $pointsPerQuestion;
+    }
+
+    public function getUserHighScore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'user_id' => 'required|uuid',
+            'game_id' => 'required|integer',
+        ]);
+
+        $userGameProgress = UserGameProgress::where([
+            'user_id' => $validatedData['user_id'],
+            'game_id' => $validatedData['game_id']
+        ])->first();
+
+        if ($userGameProgress) {
+            return response()->json([
+                'high_score' => $userGameProgress->high_score
+            ]);
+        } else {
+            return response()->json([
+                'high_score' => 0
+            ]);
+        }
     }
 }

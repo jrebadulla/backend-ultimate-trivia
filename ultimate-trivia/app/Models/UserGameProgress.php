@@ -20,7 +20,9 @@ class UserGameProgress extends Model
         'level',
         'high_score',
         'last_played',
-        'score'
+        'score',
+        'playtime',
+         'day'
     ];
 
     public function user()
